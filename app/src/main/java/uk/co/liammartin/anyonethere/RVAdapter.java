@@ -27,9 +27,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ShoutViewHolder> {
          */
         ShoutViewHolder(View itemView) {
             super(itemView);
-            individual_review_card_view = (CardView) itemView.findViewById(R.id.individual_review_card_view);
+            individual_review_card_view = (CardView) itemView.findViewById(R.id.review_card_view);
             username = (TextView) itemView.findViewById(R.id.username);
-            individual_review_card_view.setOnClickListener(this);
+            //individual_review_card_view.setOnClickListener(this);
         }
 
         //Implementing a click action at the ViewHolder level using getAdapterPosition(); to find
