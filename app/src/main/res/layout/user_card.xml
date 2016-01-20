@@ -10,27 +10,21 @@
     android:orientation="vertical">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="4dp"
-        android:paddingBottom="4dp">
+        android:paddingBottom="4dp"
+        android:background="@drawable/button_ripple">
 
         <TextView
-            android:id="@+id/review_username"
+            android:id="@+id/username"
             style="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:layout_marginRight="6dp"
-            android:text="Jane Doe" />
-
-        <TextView
-            android:id="@+id/review_body"
-            style="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/review_username"
-            android:text="Alex was on time and had great lunchtime conversation" />
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp" />
 
 
     </RelativeLayout>
