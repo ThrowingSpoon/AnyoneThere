@@ -4,13 +4,22 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LandingScreen extends Activity {
+public class LandingScreen extends Activity implements JSONClient.GetJSONListener {
 
-    private List<user> users;
+    ArrayList<String> usernames = new ArrayList<>();
+    String data_url = "http://134.83.83.25:47309/Json";
+    final String TAG = "LandingScreen.java";
+    private List<user> users = new ArrayList<>();
     private RecyclerView rv;
 
     @Override
@@ -39,31 +48,45 @@ public class LandingScreen extends Activity {
      * Create some data objects (random data just for testing at the moment)
      */
     private void initializeData() {
-        users = new ArrayList<>();
-        users.add(new user("USER"));
-        users.add(new user("USER"));
-        users.add(new user("USER"));
-        users.add(new user("USER"));
-        users.add(new user("USER"));
-        users.add(new user("USER"));
-        users.add(new user("USER"));
-        users.add(new user("USER"));
-        users.add(new user("USER"));
-        users.add(new user("USER"));
-        users.add(new user("USER"));
-        users.add(new user("USER"));
-        users.add(new user("USER"));
-        users.add(new user("USER"));
-        users.add(new user("USER"));
-        users.add(new user("USER"));
-        users.add(new user("USER"));
-        users.add(new user("USER"));
-        users.add(new user("USER"));
-        users.add(new user("USER"));
-        users.add(new user("USER"));
-        users.add(new user("USER"));
-        users.add(new user("USER"));
-        users.add(new user("USER"));
+
+        URLWithParams mURLWithParams = new URLWithParams();
+        mURLWithParams.url = data_url;
+
+        try {
+            JSONClient asyncPoster = new JSONClient(this);
+            asyncPoster.execute(mURLWithParams);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onRemoteCallComplete(String result) {
+
+        Log.d(TAG, "received json catalog:");
+        Log.d(TAG, result);
+
+        try {
+            JSONArray array = new JSONArray(result);
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject row = array.getJSONObject(i);
+                Log.d(TAG,row.toString());
+                Log.d(TAG,row.getString("USERNAME"));
+                usernames.add(row.getString("USERNAME"));
+            }
+
+
+        }catch(Exception e){
+            Log.e(TAG,e.toString());
+        }
+        for(String username : usernames) {
+            users.add(new user(username));
+        }
+
+        rv.getAdapter().notifyDataSetChanged();
+
+
     }
 
     /**

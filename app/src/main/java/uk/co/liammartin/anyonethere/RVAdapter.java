@@ -7,8 +7,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ShoutViewHolder> {
@@ -18,6 +20,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ShoutViewHolder> {
         CardView individual_review_card_view;
         //Creating variables for holding the items that will be in the CardViews
         TextView username;
+        RecyclerView recyclerView;
 
         /**
          * Taking the View we passed it when inflating user_card.xml and then finding
@@ -29,6 +32,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ShoutViewHolder> {
             super(itemView);
             individual_review_card_view = (CardView) itemView.findViewById(R.id.review_card_view);
             username = (TextView) itemView.findViewById(R.id.username);
+            recyclerView = (RecyclerView) itemView.findViewById(R.id.rv);
             //individual_review_card_view.setOnClickListener(this);
         }
 
@@ -43,11 +47,20 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ShoutViewHolder> {
                 //Getting our current context
                 Context current_context = v.getContext();
 
+                notifyDataSetChanged();
             }
         }
+
+
     }
 
     List<user> users;
+
+    public void updateData(ArrayList<user> data) {
+        users.clear();
+        users.addAll(data);
+        notifyDataSetChanged();
+    }
 
     RVAdapter(List<user> users) {
         this.users = users;
