@@ -64,8 +64,10 @@ public class LandingScreen extends Activity implements JSONClient.GetJSONListene
     @Override
     public void onRemoteCallComplete(String result) {
 
-        Log.d(TAG, "received json catalog:");
-        Log.d(TAG, result);
+        Log.d(TAG, "received json catalog:" + result);
+        //Log.d(TAG, result);
+
+        usernames.add("TEST");
 
         try {
             JSONArray array = new JSONArray(result);
