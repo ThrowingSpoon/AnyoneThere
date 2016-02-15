@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,6 +23,7 @@ public class LandingScreen extends Activity implements JSONClient.GetJSONListene
     final String TAG = "LandingScreen.java";
     private List<user> users = new ArrayList<>();
     private RecyclerView rv;
+    Button refresh_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,15 @@ public class LandingScreen extends Activity implements JSONClient.GetJSONListene
         //Get the RecyclerView
         rv = (RecyclerView) findViewById(R.id.rv);
 
+        //Getting the refresh button and attaching an onclick listener
+        refresh_button = (Button) findViewById(R.id.refresh_button);
+
+        refresh_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initializeData();
+            }
+        });
         //Create a LinearLayoutManager and set it to the RecyclerView
         //This will mean the RecyclerView will add items below eachother
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -47,7 +59,7 @@ public class LandingScreen extends Activity implements JSONClient.GetJSONListene
     /**
      * Create some data objects (random data just for testing at the moment)
      */
-    private void initializeData() {
+    public void initializeData() {
 
         URLWithParams mURLWithParams = new URLWithParams();
         mURLWithParams.url = data_url;
@@ -61,6 +73,11 @@ public class LandingScreen extends Activity implements JSONClient.GetJSONListene
         }
     }
 
+
+    /**
+     * Method called when the async remote call is complete
+     * @param result
+     */
     @Override
     public void onRemoteCallComplete(String result) {
 

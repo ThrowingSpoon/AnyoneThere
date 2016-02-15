@@ -59,9 +59,9 @@ public class JSONClient extends AsyncTask<URLWithParams, Void, String> {
         else
         {
             Log.d(TAG, "starting connect with this many pairs: " + pairs.size());
-            for(NameValuePair dog : pairs)
+            for(NameValuePair pair : pairs)
             {
-                Log.d(TAG, "example: " + dog.toString());
+                Log.d(TAG, "example: " + pair.toString());
             }
         }
 
