@@ -7,8 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ShoutViewHolder> {
 
     class ShoutViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         //Creating a CardView variable which will be each one of our users
-        CardView individual_review_card_view;
+        CardView user_card;
         //Creating variables for holding the items that will be in the CardViews
         TextView username;
         RecyclerView recyclerView;
@@ -30,10 +30,10 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ShoutViewHolder> {
          */
         ShoutViewHolder(View itemView) {
             super(itemView);
-            individual_review_card_view = (CardView) itemView.findViewById(R.id.review_card_view);
+            user_card = (CardView) itemView.findViewById(R.id.user_card);
             username = (TextView) itemView.findViewById(R.id.username);
             recyclerView = (RecyclerView) itemView.findViewById(R.id.rv);
-            //individual_review_card_view.setOnClickListener(this);
+            user_card.setOnClickListener(this);
         }
 
         //Implementing a click action at the ViewHolder level using getAdapterPosition(); to find
@@ -43,15 +43,13 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ShoutViewHolder> {
         @Override
         public void onClick(View v) {
             if (getAdapterPosition() >= 0) {
-
-                //Getting our current context
                 Context current_context = v.getContext();
 
-                notifyDataSetChanged();
+                Toast.makeText(current_context, Integer.toString(getAdapterPosition()),
+                        Toast.LENGTH_SHORT).show();
+                delete(getAdapterPosition());
             }
         }
-
-
     }
 
     List<user> users;
@@ -109,8 +107,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ShoutViewHolder> {
      * specified position (at i)
      *
      * @param userViewHolder The ViewHolder which should be updated to represent the contents of
-     *                        the item at the given position in the data set
-     * @param i               The position of the item within the adapter's data set
+     *                       the item at the given position in the data set
+     * @param i              The position of the item within the adapter's data set
      */
     @Override
     public void onBindViewHolder(final ShoutViewHolder userViewHolder, final int i) {
