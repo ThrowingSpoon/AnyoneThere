@@ -131,6 +131,7 @@ public class LandingScreen extends Activity {
                 }
                 
             }
+
         });
     }
 }
