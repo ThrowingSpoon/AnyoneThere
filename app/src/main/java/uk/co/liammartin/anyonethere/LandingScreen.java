@@ -78,7 +78,7 @@ public class LandingScreen extends Activity {
         }
         rv.getAdapter().notifyItemRangeChanged(0, rv.getAdapter().getItemCount());
     }
-
+    
     /**
      * Create an instance of RVAdapter (Recycler View Adapter) using an ArrayList of data
      * objects, in this case we are using user objects (from user.java)
