@@ -1,7 +1,7 @@
 package uk.co.liammartin.anyonethere;
 
 import android.content.Context;
-import android.os.Handler;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,66 +18,14 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ShoutViewHolder> {
     //List of type user to hold the data for each user
     List<user> users;
 
-    class ShoutViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-        //Creating a CardView variable which will be each one of our users
-        CardView user_card;
-
-        //Creating variables for holding the items that will be in the CardViews
-        TextView username;
-        RecyclerView recyclerView;
-
-        /**
-         * Taking the View we passed it when inflating user_card.xml and then finding
-         * all of the individual views inside of it (the TextViews and ImageView at the moment)
-         *
-         * @param itemView the user_card.xml inflated view (containing TextViews and ImageView)
-         */
-        ShoutViewHolder(View itemView) {
-            super(itemView);
-            user_card = (CardView) itemView.findViewById(R.id.user_card);
-            username = (TextView) itemView.findViewById(R.id.username);
-            recyclerView = (RecyclerView) itemView.findViewById(R.id.rv);
-            user_card.setOnClickListener(this);
-        }
-
-        //Implementing a click action at the ViewHolder level using getAdapterPosition(); to find
-        //the position of the element we want to do something with. we have already set an
-        //onclick listener on the item we want to listen for the click (the whole user cardView)
-        //and can do anything now!
-        @Override
-        public void onClick(View v) {
-            if (getAdapterPosition() >= 0) {
-                Context current_context = v.getContext();
-
-                String username = users.get(getAdapterPosition()).username;
-
-                final Toast toast = Toast.makeText(current_context, username,
-                        Toast.LENGTH_SHORT);
-                toast.show();
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        toast.cancel();
-                    }
-                }, 100);
-
-                delete(getAdapterPosition());
-            }
-        }
+    RVAdapter(List<user> users) {
+        this.users = users;
     }
-
-
 
     public void updateData(ArrayList<user> data) {
         users.clear();
         users.addAll(data);
         notifyDataSetChanged();
-    }
-
-    RVAdapter(List<user> users) {
-        this.users = users;
     }
 
     /**
@@ -141,6 +88,46 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ShoutViewHolder> {
     @Override
     public int getItemCount() {
         return users.size();
+    }
+
+    class ShoutViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        //Creating a CardView variable which will be each one of our users
+        CardView user_card;
+
+        //Creating variables for holding the items that will be in the CardViews
+        TextView username;
+        RecyclerView recyclerView;
+
+        /**
+         * Taking the View we passed it when inflating user_card.xml and then finding
+         * all of the individual views inside of it (the TextViews and ImageView at the moment)
+         *
+         * @param itemView the user_card.xml inflated view (containing TextViews and ImageView)
+         */
+        ShoutViewHolder(View itemView) {
+            super(itemView);
+            user_card = (CardView) itemView.findViewById(R.id.user_card);
+            username = (TextView) itemView.findViewById(R.id.username);
+            recyclerView = (RecyclerView) itemView.findViewById(R.id.rv);
+            user_card.setOnClickListener(this);
+        }
+
+        //Implementing a click action at the ViewHolder level using getAdapterPosition(); to find
+        //the position of the element we want to do something with. we have already set an
+        //onclick listener on the item we want to listen for the click (the whole user cardView)
+        //and can do anything now!
+        @Override
+        public void onClick(View v) {
+            if (getAdapterPosition() >= 0) {
+                //Bundling the username and opening the chat screen using an intent
+                Context current_context = v.getContext();
+                String username = users.get(getAdapterPosition()).username;
+                Intent open_chat = new Intent(current_context, ChatScreen.class);
+                open_chat.putExtra("username", username);
+                current_context.startActivity(open_chat);
+            }
+        }
     }
 }
 

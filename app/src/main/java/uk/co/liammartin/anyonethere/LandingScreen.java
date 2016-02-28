@@ -22,21 +22,20 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class LandingScreen extends Activity {
-
-    //Views
-    private RecyclerView rv;
-    Button refresh_button;
-
-    //Data
-    ArrayList<String> usernames = new ArrayList<>();
-    String data_url = "http://134.83.83.25:47309/Json";
+public class LandingScreen extends Activity implements View.OnClickListener {
     final String TAG = "LandingScreen.java";
-    private List<user> users = new ArrayList<>();
-    String data;
 
     //OkHttpClient
     private final OkHttpClient client = new OkHttpClient();
+
+    //Data
+    List<user> users = new ArrayList<>();
+    ArrayList<String> usernames = new ArrayList<>();
+
+    //Views
+    Button refresh_button;
+    RecyclerView rv;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +46,7 @@ public class LandingScreen extends Activity {
 
         //Getting the refresh button and attaching an onclick listener
         refresh_button = (Button) findViewById(R.id.refresh_button);
-        refresh_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                initializeData();
-            }
-        });
+        refresh_button.setOnClickListener(this);
 
         //Create a LinearLayoutManager and set it to the RecyclerView
         //This will mean the RecyclerView will add items below eachother
@@ -63,6 +57,20 @@ public class LandingScreen extends Activity {
         initializeAdapter();
         //Pull the data down from the server and create data objects from them
         initializeData();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+
+            case R.id.refresh_button:
+                initializeData();
+                break;
+
+            default:
+                Log.d(TAG, "Click item not recognised!");
+                break;
+        }
     }
 
     /**
@@ -93,14 +101,14 @@ public class LandingScreen extends Activity {
                 .url("http://134.83.83.25:47309/Liam")
                 .build();
 
-        //
+        //Queue up the client call to server
         client.newCall(request).enqueue(new Callback() {
 
             String responseString;
 
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.d("123123", e.toString());
+                Log.d(TAG, e.toString());
             }
 
             //Getting our response
@@ -115,7 +123,7 @@ public class LandingScreen extends Activity {
                     System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
                 }
 
-                //Taking the response and updating the usernames on the MAIN THREAD
+                //Taking the response and updating the usernames on the *MAIN THREAD*
                 responseString = response.body().string();
                 runOnUiThread(new Runnable() {
                     @Override
@@ -129,6 +137,11 @@ public class LandingScreen extends Activity {
 
     }
 
+    /**
+     * Display all of the entries from the JSONArray string in the RecyclerView
+     *
+     * @param response The JSONArray received from the server
+     */
     private void displayUsernames(String response) {
         try {
             usernames.clear();
@@ -145,7 +158,8 @@ public class LandingScreen extends Activity {
             }
             rv.getAdapter().notifyItemRangeChanged(0, rv.getAdapter().getItemCount());
         } catch (Exception e) {
-            Log.d("123123", e.toString());
+            Log.d(TAG, e.toString());
         }
     }
+
 }

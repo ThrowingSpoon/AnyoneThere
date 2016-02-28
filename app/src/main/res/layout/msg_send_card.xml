@@ -3,7 +3,7 @@
     android:id="@+id/msg_send_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_alignRight="@id/rv_linear_layout"
+    android:layout_alignRight="@id/chat_rv_linear_layout"
     android:layout_marginBottom="8dp"
     android:layout_marginLeft="100dp"
     android:layout_marginRight="4dp"

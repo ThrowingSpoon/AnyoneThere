@@ -3,11 +3,10 @@
     android:id="@+id/user_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_alignLeft="@id/rv_linear_layout"
     android:layout_marginBottom="8dp"
-    android:layout_marginRight="100dp"
-    android:layout_marginLeft="4dp"
-    android:layout_marginTop="4dp">
+    android:layout_marginLeft="12dp"
+    android:layout_marginRight="12dp"
+    android:layout_marginTop="8dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,10 +17,8 @@
         <TextView
             android:id="@+id/username"
             style="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:paddingLeft="4dp" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </RelativeLayout>
 

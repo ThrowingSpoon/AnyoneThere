@@ -3,10 +3,10 @@
     android:id="@+id/msg_receive_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_alignLeft="@id/rv_linear_layout"
+    android:layout_alignLeft="@id/chat_rv_linear_layout"
     android:layout_marginBottom="8dp"
-    android:layout_marginRight="100dp"
     android:layout_marginLeft="4dp"
+    android:layout_marginRight="100dp"
     android:layout_marginTop="4dp">
 
     <RelativeLayout

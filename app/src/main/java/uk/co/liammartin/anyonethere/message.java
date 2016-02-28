@@ -1,24 +1,23 @@
 package uk.co.liammartin.anyonethere;
 
 /**
- * Each user will have its own instance of this class
+ * Each message will have its own instance of this class
  */
 
 class message {
-    String sender;
-    String receiver;
+    int sender;
+    int receiver;
     String message;
     /**
      * Constructor for making a new user instance
      *
-     * @param sender    the sender of the message
-     * @param receiver    the receiver of the message
-     * @param message    the message sent
+     * @param sender    the ID of the sender of the message
+     * @param receiver  the ID of the receiver of the message
+     * @param message   the message sent
      */
-    message(String sender,String receiver,String message) {
+    message(int sender,int receiver,String message) {
         this.sender = sender;
         this.receiver = receiver;
         this.message = message;
-
     }
 }

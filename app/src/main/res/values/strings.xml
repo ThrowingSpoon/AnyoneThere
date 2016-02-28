@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AnyoneThere</string>
+    <string name="chat_header">Chatting with: %1$s</string>
+    <string name="refresh_button_label">REFRESH</string>
 </resources>
