@@ -14,7 +14,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Handler;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -45,6 +44,7 @@ public class LandingScreen extends Activity {
         setContentView(R.layout.landing_screen);
         //Get the RecyclerView
         rv = (RecyclerView) findViewById(R.id.rv);
+
         //Getting the refresh button and attaching an onclick listener
         refresh_button = (Button) findViewById(R.id.refresh_button);
         refresh_button.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +53,7 @@ public class LandingScreen extends Activity {
                 initializeData();
             }
         });
+
         //Create a LinearLayoutManager and set it to the RecyclerView
         //This will mean the RecyclerView will add items below eachother
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -87,10 +88,12 @@ public class LandingScreen extends Activity {
 
     public void getUsernames() throws Exception {
 
+        //Building our request
         Request request = new Request.Builder()
-                .url("http://134.83.83.25:47309/Json")
+                .url("http://134.83.83.25:47309/Liam")
                 .build();
 
+        //
         client.newCall(request).enqueue(new Callback() {
 
             String responseString;
@@ -106,11 +109,13 @@ public class LandingScreen extends Activity {
                 if (!response.isSuccessful())
                     throw new IOException("Unexpected code " + response);
 
+                //Displaying the data in logcat
                 Headers responseHeaders = response.headers();
                 for (int i = 0; i < responseHeaders.size(); i++) {
                     System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
                 }
 
+                //Taking the response and updating the usernames on the MAIN THREAD
                 responseString = response.body().string();
                 runOnUiThread(new Runnable() {
                     @Override
@@ -132,8 +137,8 @@ public class LandingScreen extends Activity {
             for (int i = 0; i < array.length(); i++) {
                 JSONObject row = array.getJSONObject(i);
                 Log.d(TAG, row.toString());
-                Log.d(TAG, row.getString("USERNAME"));
-                usernames.add(row.getString("USERNAME"));
+                Log.d(TAG, row.getString("USER_NAME"));
+                usernames.add(row.getString("USER_NAME"));
             }
             for (String username : usernames) {
                 users.add(new user(username));
