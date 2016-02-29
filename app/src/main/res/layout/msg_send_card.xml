@@ -16,7 +16,7 @@
         android:paddingTop="4dp">
 
         <TextView
-            android:id="@+id/username"
+            android:id="@+id/message_send"
             style="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

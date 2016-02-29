@@ -74,12 +74,12 @@ public class LandingScreen extends Activity implements View.OnClickListener {
     }
 
     /**
-     * Create some data objects (random data just for testing at the moment)
+     * Initialize the data
      */
     public void initializeData() {
         try {
             getUsernames();
-            //users.add(new user("TEST"));
+            //messages.add(new user("TEST"));
         } catch (Exception e) {
             Log.d("123123", e.toString());
         }
