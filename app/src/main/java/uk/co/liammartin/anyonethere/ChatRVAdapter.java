@@ -113,20 +113,9 @@ public class ChatRVAdapter extends RecyclerView.Adapter<ChatRVAdapter.ShoutViewH
             msg_send_card.setOnClickListener(this);
         }
 
-        //Implementing a click action at the ViewHolder level using getAdapterPosition(); to find
-        //the position of the element we want to do something with. we have already set an
-        //onclick listener on the item we want to listen for the click (the whole message cardView)
-        //and can do anything now!
         @Override
         public void onClick(View v) {
-            if (getAdapterPosition() >= 0) {
-                //Bundling the message and opening the chat screen using an intent
-                Context current_context = v.getContext();
-                String message = messages.get(getAdapterPosition()).message;
-                Intent open_chat = new Intent(current_context, ChatScreen.class);
-                open_chat.putExtra("message", message);
-                current_context.startActivity(open_chat);
-            }
+            //When chat item is clicked do stuff here if you want
         }
     }
 }

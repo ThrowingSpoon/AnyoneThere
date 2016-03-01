@@ -17,9 +17,11 @@ import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class LandingScreen extends Activity implements View.OnClickListener {
@@ -31,6 +33,7 @@ public class LandingScreen extends Activity implements View.OnClickListener {
     //Data
     List<user> users = new ArrayList<>();
     ArrayList<String> usernames = new ArrayList<>();
+    ArrayList<String> ids = new ArrayList<>();
 
     //Views
     Button refresh_button;
@@ -152,9 +155,10 @@ public class LandingScreen extends Activity implements View.OnClickListener {
                 Log.d(TAG, row.toString());
                 Log.d(TAG, row.getString("USER_NAME"));
                 usernames.add(row.getString("USER_NAME"));
+                ids.add(row.getString("USER_ID"));
             }
-            for (String username : usernames) {
-                users.add(new user(username));
+            for (int i = 0; i < ids.size(); i++) {
+                users.add(new user(usernames.get(i), ids.get(i)));
             }
             rv.getAdapter().notifyItemRangeChanged(0, rv.getAdapter().getItemCount());
         } catch (Exception e) {

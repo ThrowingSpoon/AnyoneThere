@@ -123,8 +123,10 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ShoutViewHolder> {
                 //Bundling the username and opening the chat screen using an intent
                 Context current_context = v.getContext();
                 String username = users.get(getAdapterPosition()).username;
+                String id = users.get(getAdapterPosition()).user_id;
                 Intent open_chat = new Intent(current_context, ChatScreen.class);
                 open_chat.putExtra("username", username);
+                open_chat.putExtra("id", id);
                 current_context.startActivity(open_chat);
             }
         }

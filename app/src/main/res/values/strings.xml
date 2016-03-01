@@ -2,4 +2,6 @@
     <string name="app_name">AnyoneThere</string>
     <string name="chat_header">Chatting with: %1$s</string>
     <string name="refresh_button_label">REFRESH</string>
+    <string name="chat_send_message">Send Chat Message</string>
+    <string name="enter_message_hint">Enter message here:</string>
 </resources>
