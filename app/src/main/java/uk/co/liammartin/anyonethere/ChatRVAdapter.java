@@ -82,20 +82,24 @@ public class ChatRVAdapter extends RecyclerView.Adapter<ChatRVAdapter.MessageVie
      */
     @Override
     public void onBindViewHolder(final MessageViewHolder messageViewHolder, final int i) {
-        if (messages.get(messageViewHolder.getAdapterPosition()).from_id == USER_ID) {
-            RecyclerView.LayoutParams card_params =
-                    (RecyclerView.LayoutParams) messageViewHolder.msg_card.getLayoutParams();
-            card_params.setMarginStart(150);
-            card_params.setMarginEnd(0);
-            messageViewHolder.msg_card.setLayoutParams(card_params);
-            messageViewHolder.message.setGravity(Gravity.END);
-        } else {
+        Log.d("123123", String.valueOf(messageViewHolder.getAdapterPosition()));
+        Log.d("123123", String.valueOf(i));
+        Log.d("123123", String.valueOf(messages.get(messageViewHolder.getAdapterPosition()).from_id));
+
+        if (messages.get(messageViewHolder.getAdapterPosition()).from_id != USER_ID) {
             RecyclerView.LayoutParams card_params =
                     (RecyclerView.LayoutParams) messageViewHolder.msg_card.getLayoutParams();
             card_params.setMarginEnd(150);
             card_params.setMarginStart(0);
             messageViewHolder.msg_card.setLayoutParams(card_params);
             messageViewHolder.message.setGravity(Gravity.START);
+        } else {
+            RecyclerView.LayoutParams card_params =
+                    (RecyclerView.LayoutParams) messageViewHolder.msg_card.getLayoutParams();
+            card_params.setMarginStart(150);
+            card_params.setMarginEnd(0);
+            messageViewHolder.msg_card.setLayoutParams(card_params);
+            messageViewHolder.message.setGravity(Gravity.END);
         }
         //TODO: Fix bug with messages sending to the left
         messageViewHolder.message.setText(messages.get(messageViewHolder.getAdapterPosition()).message);
@@ -133,13 +137,6 @@ public class ChatRVAdapter extends RecyclerView.Adapter<ChatRVAdapter.MessageVie
             message = (TextView) itemView.findViewById(R.id.message_content);
             recyclerView = (RecyclerView) itemView.findViewById(R.id.rv);
             msg_card.setOnClickListener(this);
-
-            /*RecyclerView.LayoutParams card_params =
-                    (RecyclerView.LayoutParams) msg_card.getLayoutParams();
-            card_params.setMarginStart(150);
-            card_params.setMarginEnd(0);
-            msg_card.setLayoutParams(card_params);
-            message.setGravity(Gravity.END);*/
         }
 
         @Override

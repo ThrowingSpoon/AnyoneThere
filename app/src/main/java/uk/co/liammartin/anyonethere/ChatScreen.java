@@ -136,7 +136,7 @@ public class ChatScreen extends Activity {
                     @Override
                     public void run() {
                         displayMessages(responseString);
-                        rv.getAdapter().notifyItemInserted(messages.size());
+//                        rv.getAdapter().notifyItemInserted(messages.size());
                         rv.getAdapter().notifyDataSetChanged();
                     }
                 });
@@ -205,6 +205,8 @@ public class ChatScreen extends Activity {
         try {
             message_bodies.clear();
             messages.clear();
+            to_ids.clear();
+            from_ids.clear();
             JSONArray array = new JSONArray(response);
             for (int i = 0; i < array.length(); i++) {
                 JSONObject row = array.getJSONObject(i);
@@ -217,7 +219,8 @@ public class ChatScreen extends Activity {
             for (int i = 0; i < message_bodies.size(); i++) {
                 messages.add(new message(to_ids.get(i), from_ids.get(i), message_bodies.get(i)));
             }
-            //rv.getAdapter().notifyItemRangeChanged(0, rv.getAdapter().getItemCount());
+//            rv.getAdapter().notifyItemInserted(messages.size()-1);
+//            rv.getAdapter().notifyItemRangeChanged(0, rv.getAdapter().getItemCount());
         } catch (Exception e) {
             Log.d(TAG, e.toString());
         }
