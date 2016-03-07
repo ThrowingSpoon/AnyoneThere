@@ -1,22 +1,27 @@
 package uk.co.liammartin.anyonethere;
 
-import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatRVAdapter extends RecyclerView.Adapter<ChatRVAdapter.ShoutViewHolder> {
+public class ChatRVAdapter extends RecyclerView.Adapter<ChatRVAdapter.MessageViewHolder> {
 
     //List of type message to hold the data for each message
     List<message> messages;
+
+    int USER_ID = 1;
 
     ChatRVAdapter(List<message> messages) {
         this.messages = messages;
@@ -44,17 +49,18 @@ public class ChatRVAdapter extends RecyclerView.Adapter<ChatRVAdapter.ShoutViewH
      *
      * @param viewGroup The parent ViewGroup that the message ViewHolder will added to after
      *                  it is bound to an adapter position (adapter will contain each
-     *                  individual message view, the TextViews and ImageView)
+     *                  individual message card view, the TextViews)
      * @param i         The view type
-     * @return The ViewHolder for a message so that the RecyclerView to display messages
+     * @return The ViewHolder for a message card so that the RecyclerView to display messages
      */
     @Override
-    public ShoutViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        //This part shows us that we are inflating our msg_send_card xml file -------v
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.msg_send_card, viewGroup, false);
-        Log.d("DEBUGGING", "OnCreateViewHolder Called with position " + i);
-        return new ShoutViewHolder(v);
+    public MessageViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        //This part shows us that we are inflating our msg_card xml file -------v
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.msg_card, viewGroup, false);
+        Log.d("DEBUGGING", "OnCreateViewHolder Called with position " + String.valueOf(i));
+        return new MessageViewHolder(v);
     }
+
 
     /**
      * Remove an item from the data List
@@ -71,12 +77,28 @@ public class ChatRVAdapter extends RecyclerView.Adapter<ChatRVAdapter.ShoutViewH
      * specified position (at i)
      *
      * @param messageViewHolder The ViewHolder which should be updated to represent the contents of
-     *                       the item at the given position in the data set
-     * @param i              The position of the item within the adapter's data set
+     *                          the item at the given position in the data set
+     * @param i                 The position of the item within the adapter's data set
      */
     @Override
-    public void onBindViewHolder(final ShoutViewHolder messageViewHolder, final int i) {
-        messageViewHolder.message.setText(messages.get(i).message);
+    public void onBindViewHolder(final MessageViewHolder messageViewHolder, final int i) {
+        if (messages.get(messageViewHolder.getAdapterPosition()).from_id == USER_ID) {
+            RecyclerView.LayoutParams card_params =
+                    (RecyclerView.LayoutParams) messageViewHolder.msg_card.getLayoutParams();
+            card_params.setMarginStart(150);
+            card_params.setMarginEnd(0);
+            messageViewHolder.msg_card.setLayoutParams(card_params);
+            messageViewHolder.message.setGravity(Gravity.END);
+        } else {
+            RecyclerView.LayoutParams card_params =
+                    (RecyclerView.LayoutParams) messageViewHolder.msg_card.getLayoutParams();
+            card_params.setMarginEnd(150);
+            card_params.setMarginStart(0);
+            messageViewHolder.msg_card.setLayoutParams(card_params);
+            messageViewHolder.message.setGravity(Gravity.START);
+        }
+        //TODO: Fix bug with messages sending to the left
+        messageViewHolder.message.setText(messages.get(messageViewHolder.getAdapterPosition()).message);
     }
 
     /**
@@ -90,27 +112,34 @@ public class ChatRVAdapter extends RecyclerView.Adapter<ChatRVAdapter.ShoutViewH
         return messages.size();
     }
 
-    class ShoutViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class MessageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         //Creating a CardView variable which will be each one of our messages
-        CardView msg_send_card;
+        CardView msg_card;
 
         //Creating variables for holding the items that will be in the CardViews
         TextView message;
         RecyclerView recyclerView;
 
         /**
-         * Taking the View we passed it when inflating msg_send_card.xml and then finding
+         * Taking the View we passed it when inflating msg_card.xml and then finding
          * all of the individual views inside of it (the TextViews and ImageView at the moment)
          *
-         * @param itemView the msg_send_card.xml inflated view (containing TextViews and ImageView)
+         * @param itemView the msg_card.xml inflated view (containing TextViews and ImageView)
          */
-        ShoutViewHolder(View itemView) {
+        MessageViewHolder(View itemView) {
             super(itemView);
-            msg_send_card = (CardView) itemView.findViewById(R.id.msg_send_card);
-            message = (TextView) itemView.findViewById(R.id.message_send);
+            msg_card = (CardView) itemView.findViewById(R.id.msg_card);
+            message = (TextView) itemView.findViewById(R.id.message_content);
             recyclerView = (RecyclerView) itemView.findViewById(R.id.rv);
-            msg_send_card.setOnClickListener(this);
+            msg_card.setOnClickListener(this);
+
+            /*RecyclerView.LayoutParams card_params =
+                    (RecyclerView.LayoutParams) msg_card.getLayoutParams();
+            card_params.setMarginStart(150);
+            card_params.setMarginEnd(0);
+            msg_card.setLayoutParams(card_params);
+            message.setGravity(Gravity.END);*/
         }
 
         @Override

@@ -15,6 +15,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -58,7 +60,6 @@ public class ChatScreen extends Activity {
         chattingToUsername = chat_data.getString("username");
         chattingToId = chat_data.getString("id");
         chatHeader.setText(getString(R.string.chat_header, chattingToUsername));
-        chatHeader.append(" " + chattingToId);
         //Get the RecyclerView
         rv = (RecyclerView) findViewById(R.id.chat_rv);
 
@@ -98,8 +99,8 @@ public class ChatScreen extends Activity {
 
         //Adding a post form
         RequestBody formBody = new FormBody.Builder()
-                .add("USER_NAME",chattingToUsername)
-                .add("CHATTING_TO",chattingToId)
+                .add("USER_NAME", chattingToUsername)
+                .add("CHATTING_TO", chattingToId)
                 .build();
         //Building our request
         Request request = new Request.Builder()
@@ -129,15 +130,22 @@ public class ChatScreen extends Activity {
                     System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
                 }
 
-                //Taking the response and updating the usernames on the *MAIN THREAD*
+                //Taking the response and updating the messages on the *MAIN THREAD*
                 responseString = response.body().string();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         displayMessages(responseString);
+                        rv.getAdapter().notifyItemInserted(messages.size());
                         rv.getAdapter().notifyDataSetChanged();
                     }
                 });
+                try {
+                    Thread.sleep(2000, 100);
+                    getMessages();
+                }catch (Exception e){
+                    Log.d(TAG,e.toString());
+                }
             }
         });
 
@@ -147,8 +155,9 @@ public class ChatScreen extends Activity {
         String message = message_input_box.getText().toString();
         try {
             makeChat(message);
-        }catch (Exception e){
-            Log.d(TAG,e.toString());
+            message_input_box.setText("");
+        } catch (Exception e) {
+            Log.d(TAG, e.toString());
         }
     }
 
@@ -156,8 +165,8 @@ public class ChatScreen extends Activity {
 
         //Adding a post form
         RequestBody formBody = new FormBody.Builder()
-                .add("MESSAGE",message)
-                .add("CHATTING_TO",chattingToId)
+                .add("MESSAGE", message)
+                .add("CHATTING_TO", chattingToId)
                 .build();
         //Building our request
         Request request = new Request.Builder()
@@ -178,6 +187,10 @@ public class ChatScreen extends Activity {
             //Getting our response (no need to worry because its a post)
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                try {
+                } catch (Exception e) {
+                    Log.d(TAG,e.toString());
+                }
             }
         });
 
@@ -204,7 +217,7 @@ public class ChatScreen extends Activity {
             for (int i = 0; i < message_bodies.size(); i++) {
                 messages.add(new message(to_ids.get(i), from_ids.get(i), message_bodies.get(i)));
             }
-            rv.getAdapter().notifyItemRangeChanged(0, rv.getAdapter().getItemCount());
+            //rv.getAdapter().notifyItemRangeChanged(0, rv.getAdapter().getItemCount());
         } catch (Exception e) {
             Log.d(TAG, e.toString());
         }
