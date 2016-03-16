@@ -24,7 +24,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class LandingScreen extends Activity implements View.OnClickListener {
+public class LandingScreen extends Activity {
     final String TAG = "LandingScreen.java";
 
     //OkHttpClient
@@ -47,9 +47,9 @@ public class LandingScreen extends Activity implements View.OnClickListener {
         //Get the RecyclerView
         rv = (RecyclerView) findViewById(R.id.rv);
 
-        //Getting the refresh button and attaching an onclick listener
+/*        //Getting the refresh button and attaching an onclick listener
         refresh_button = (Button) findViewById(R.id.refresh_button);
-        refresh_button.setOnClickListener(this);
+        refresh_button.setOnClickListener(this);*/
 
         //Create a LinearLayoutManager and set it to the RecyclerView
         //This will mean the RecyclerView will add items below eachother
@@ -62,7 +62,7 @@ public class LandingScreen extends Activity implements View.OnClickListener {
         initializeData();
     }
 
-    @Override
+    /*@Override
     public void onClick(View v) {
         switch (v.getId()) {
 
@@ -74,7 +74,7 @@ public class LandingScreen extends Activity implements View.OnClickListener {
                 Log.d(TAG, "Click item not recognised!");
                 break;
         }
-    }
+    }*/
 
     /**
      * Initialize the data
@@ -135,6 +135,12 @@ public class LandingScreen extends Activity implements View.OnClickListener {
                         rv.getAdapter().notifyDataSetChanged();
                     }
                 });
+                try {
+                    Thread.sleep(3000, 100);
+                    getUsernames();
+                }catch (Exception e){
+                    Log.d(TAG,e.toString());
+                }
             }
         });
 
@@ -149,6 +155,7 @@ public class LandingScreen extends Activity implements View.OnClickListener {
         try {
             usernames.clear();
             users.clear();
+            ids.clear();
             JSONArray array = new JSONArray(response);
             for (int i = 0; i < array.length(); i++) {
                 JSONObject row = array.getJSONObject(i);
@@ -160,7 +167,7 @@ public class LandingScreen extends Activity implements View.OnClickListener {
             for (int i = 0; i < ids.size(); i++) {
                 users.add(new user(usernames.get(i), ids.get(i)));
             }
-            rv.getAdapter().notifyItemRangeChanged(0, rv.getAdapter().getItemCount());
+//            rv.getAdapter().notifyItemRangeChanged(0, rv.getAdapter().getItemCount());
         } catch (Exception e) {
             Log.d(TAG, e.toString());
         }

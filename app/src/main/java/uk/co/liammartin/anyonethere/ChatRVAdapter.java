@@ -101,7 +101,6 @@ public class ChatRVAdapter extends RecyclerView.Adapter<ChatRVAdapter.MessageVie
             messageViewHolder.msg_card.setLayoutParams(card_params);
             messageViewHolder.message.setGravity(Gravity.END);
         }
-        //TODO: Fix bug with messages sending to the left
         messageViewHolder.message.setText(messages.get(messageViewHolder.getAdapterPosition()).message);
     }
 

@@ -11,6 +11,16 @@
     android:orientation="vertical"
     tools:context=".LandingScreen">
 
+    <TextView
+        android:id="@+id/chat_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:text="@string/landing_screen_header"
+        android:textColor="@color/icons"
+        android:gravity="center_horizontal"
+        android:textSize="@dimen/material_text_headline"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv"
         android:layout_width="wrap_content"
@@ -18,11 +28,5 @@
         android:layout_weight="1">
 
     </android.support.v7.widget.RecyclerView>
-
-    <Button
-        android:id="@+id/refresh_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/refresh_button_label"/>
 
 </LinearLayout>

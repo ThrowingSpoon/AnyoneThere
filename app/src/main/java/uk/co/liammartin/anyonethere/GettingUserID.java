@@ -47,8 +47,8 @@ public class GettingUserID extends Activity implements View.OnClickListener {
         rv = (RecyclerView) findViewById(R.id.rv);
 
         //Getting the refresh button and attaching an onclick listener
-        refresh_button = (Button) findViewById(R.id.refresh_button);
-        refresh_button.setOnClickListener(this);
+/*        refresh_button = (Button) findViewById(R.id.refresh_button);
+        refresh_button.setOnClickListener(this);*/
 
         //Create a LinearLayoutManager and set it to the RecyclerView
         //This will mean the RecyclerView will add items below eachother
@@ -65,9 +65,9 @@ public class GettingUserID extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
 
-            case R.id.refresh_button:
+           /* case R.id.refresh_button:
                 initializeData();
-                break;
+                break;*/
 
             default:
                 Log.d(TAG, "Click item not recognised!");
