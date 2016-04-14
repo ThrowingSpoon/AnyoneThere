@@ -184,7 +184,7 @@ public class ChatScreen extends Activity {
                 Log.d(TAG, e.toString());
             }
 
-            //Getting our response (no need to worry because its a post)
+            //Getting our response
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 try {

@@ -1,5 +1,6 @@
 package uk.co.liammartin.anyonethere;
 
+import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -91,6 +92,7 @@ public class ChatRVAdapter extends RecyclerView.Adapter<ChatRVAdapter.MessageVie
                     (RecyclerView.LayoutParams) messageViewHolder.msg_card.getLayoutParams();
             card_params.setMarginEnd(150);
             card_params.setMarginStart(0);
+            messageViewHolder.msg_card.setCardBackgroundColor(Color.parseColor("#8BC43A"));
             messageViewHolder.msg_card.setLayoutParams(card_params);
             messageViewHolder.message.setGravity(Gravity.START);
         } else {
@@ -98,6 +100,7 @@ public class ChatRVAdapter extends RecyclerView.Adapter<ChatRVAdapter.MessageVie
                     (RecyclerView.LayoutParams) messageViewHolder.msg_card.getLayoutParams();
             card_params.setMarginStart(150);
             card_params.setMarginEnd(0);
+            messageViewHolder.msg_card.setCardBackgroundColor(Color.parseColor("#FDFDFD"));
             messageViewHolder.msg_card.setLayoutParams(card_params);
             messageViewHolder.message.setGravity(Gravity.END);
         }

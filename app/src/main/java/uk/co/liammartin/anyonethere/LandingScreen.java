@@ -36,7 +36,6 @@ public class LandingScreen extends Activity {
     ArrayList<String> ids = new ArrayList<>();
 
     //Views
-    Button refresh_button;
     RecyclerView rv;
 
 
@@ -61,20 +60,6 @@ public class LandingScreen extends Activity {
         //Pull the data down from the server and create data objects from them
         initializeData();
     }
-
-    /*@Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-
-            case R.id.refresh_button:
-                initializeData();
-                break;
-
-            default:
-                Log.d(TAG, "Click item not recognised!");
-                break;
-        }
-    }*/
 
     /**
      * Initialize the data
